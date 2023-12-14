@@ -37,7 +37,7 @@ export /**
  */
 const TemplatePage: FunctionComponent<
     PropsWithChildren & {
-        page: number;
+        page: string;
         pageTitle?: string;
         header?: boolean;
         logo?: string;
@@ -56,7 +56,7 @@ const TemplatePage: FunctionComponent<
                         </View>
                     )}
                     <View style={styles.pageNumber}>
-                        <SubTitle text={`Page ${page.toString()}`} />
+                        <SubTitle text={`${page}`} />
                     </View>
                 </>
             )}

@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
         fontSize: '14px'
     },
     bodyCopy: {
-        fontSize: '12px',
+        fontSize: '14px',
         margin: '4px 0'
     }
 });

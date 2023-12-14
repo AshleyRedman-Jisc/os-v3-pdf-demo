@@ -32,7 +32,7 @@ export const Cover: FunctionComponent<{ title: string; logo?: string }> = ({ tit
     console.log({ logo });
 
     return (
-        <TemplatePage header={false} page={0} cover>
+        <TemplatePage header={false} page={`0`} cover>
             <View style={styles.overlay}>
                 <Image src='/cover2.jpg' style={styles.backgroundImage} />
                 {!!logo && <Image src={logo} style={styles.logo} />}

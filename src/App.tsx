@@ -2198,6 +2198,8 @@ const s = {
 function App() {
     const [survey, setSurvey] = useState<Survey>(s);
 
+    const [notes, setNotes] = useState(true);
+
     const change = (e: FormEventHandler<HTMLDivElement>) => {
         // @ts-expect-error it is there
         const text = e.target.innerText;
@@ -2229,6 +2231,22 @@ function App() {
                     What is downloaded from the above link is the <strong>same</strong> pdf that is
                     being rendered in the below viewer.
                 </p>
+                <hr style={{ display: 'block', width: '80%', margin: '0 auto 40px' }} />
+                <div style={{ display: 'block', width: '80%', margin: '0 auto 40px' }}>
+                    <p>
+                        Toggling this checkbox toggles note questions on or off. This is a general
+                        example of showing external settings causing a recalculation of the PDF
+                    </p>
+                    <div style={{ margin: '10px 0' }}>
+                        <input
+                            type='checkbox'
+                            onChange={() => setNotes((s) => !s)}
+                            style={{ marginRight: '10px' }}
+                            defaultChecked={notes}
+                        />
+                        <label htmlFor='notes'>Innclude notes?</label>
+                    </div>
+                </div>
                 <div
                     style={{
                         display: 'grid',
@@ -2262,7 +2280,7 @@ function App() {
                                 height: '800px'
                             }}
                         >
-                            <MyDocument survey={survey} />
+                            <MyDocument survey={survey} notes={notes} />
                         </PDFViewer>
                     </div>
                 </div>
