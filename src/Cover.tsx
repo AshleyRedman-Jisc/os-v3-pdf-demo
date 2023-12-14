@@ -28,12 +28,14 @@ const styles = StyleSheet.create({
     }
 });
 
-export const Cover: FunctionComponent<{ title: string }> = ({ title }) => {
+export const Cover: FunctionComponent<{ title: string; logo?: string }> = ({ title, logo }) => {
+    console.log({ logo });
+
     return (
-        <TemplatePage header={false} page={0}>
+        <TemplatePage header={false} page={0} cover>
             <View style={styles.overlay}>
                 <Image src='/cover2.jpg' style={styles.backgroundImage} />
-                <Image src='/logo.jpg' style={styles.logo} />
+                {!!logo && <Image src={logo} style={styles.logo} />}
                 <DocumentTitle text={title} />
             </View>
         </TemplatePage>

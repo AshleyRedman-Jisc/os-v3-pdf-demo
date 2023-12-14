@@ -1,16 +1,18 @@
-import { Document, Image, StyleSheet, View } from '@react-pdf/renderer';
+import { Document, View } from '@react-pdf/renderer';
 import { Cover } from './Cover';
 import { TemplatePage } from './TemplatePage';
 import { BodyCopy } from './Typeography';
+import { FunctionComponent } from 'react';
+import { Survey } from './types';
 
-const styles = StyleSheet.create({
-    section: {
-        margin: 10,
-        padding: 10
-    }
-});
+// const styles = StyleSheet.create({
+//     section: {
+//         margin: 10,
+//         padding: 10
+//     }
+// });
 
-export const MyDocument = () => {
+export const MyDocument: FunctionComponent<{ survey: Survey }> = ({ survey }) => {
     return (
         <Document
             title='Online Surveys V3 Demo'
@@ -25,8 +27,19 @@ export const MyDocument = () => {
             pageLayout='oneColumn'
             onRender={(e) => console.log({ e })}
         >
-            <Cover title='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis eget odio non dolor tristique euismod.' />
-            <TemplatePage page={1} pageTitle='This is my page title'>
+            <Cover title={survey.name} logo={survey.survey.logo?.url} />
+
+            {survey.survey.pages.flatMap((p, i) => (
+                <TemplatePage key={p.id} page={i + 1} pageTitle={p.title}>
+                    {p.questions.map((q) => (
+                        <View key={q.id}>
+                            <BodyCopy text={q.title ?? ''} />
+                        </View>
+                    ))}
+                </TemplatePage>
+            ))}
+
+            {/* <TemplatePage page={1} pageTitle='This is my page title'>
                 <View style={styles.section}>
                     <BodyCopy text='Image from URL source' />
                     <Image
@@ -46,7 +59,7 @@ export const MyDocument = () => {
                 <View style={styles.section}>
                     <BodyCopy text='Another page content' />
                 </View>
-            </TemplatePage>
+            </TemplatePage> */}
         </Document>
     );
 };

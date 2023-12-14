@@ -17,15 +17,17 @@ const styles = StyleSheet.create({
     },
     pageTitle: {
         position: 'absolute',
-        top: '3.5%',
-        left: '8%',
+        top: '3.8%',
+        // left: '8%',
         color: '#ffffff'
     },
     page: {
         backgroundColor: '#ffffff',
         position: 'relative'
     },
-    section: {}
+    section: {
+        padding: '0 10px'
+    }
 });
 
 export /**
@@ -34,16 +36,22 @@ export /**
  * @returns PDF Page
  */
 const TemplatePage: FunctionComponent<
-    PropsWithChildren & { page: number; pageTitle?: string; header?: boolean }
-> = ({ children, page, pageTitle, header = true }) => {
+    PropsWithChildren & {
+        page: number;
+        pageTitle?: string;
+        header?: boolean;
+        logo?: string;
+        cover?: boolean;
+    }
+> = ({ children, page, pageTitle, header = true, logo, cover = false }) => {
     return (
         <Page orientation='landscape' size='A4' break style={styles.page}>
             {!!header && (
                 <>
                     <Image src='/header2.jpg' style={styles.banner} />
-                    <Image src='/logo.jpg' style={styles.logo} />
+                    {!!logo && <Image src={logo} style={styles.logo} />}
                     {!!pageTitle && (
-                        <View style={styles.pageTitle}>
+                        <View style={{ ...styles.pageTitle, left: logo ? '8%' : '2.5%' }}>
                             <SubTitle text={pageTitle} />
                         </View>
                     )}
@@ -52,7 +60,7 @@ const TemplatePage: FunctionComponent<
                     </View>
                 </>
             )}
-            <View style={styles.section}>{children}</View>
+            {cover ? <View>{children}</View> : <View style={styles.section}>{children}</View>}
         </Page>
     );
 };
